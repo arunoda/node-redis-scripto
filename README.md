@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/arunoda/node-redis-scripto.png?branch=master)](https://travis-ci.org/arunoda/node-redis-scripto)
+[![Build Status](https://travis-ci.org/arunoda/node-redis-scripto.png)](https://travis-ci.org/arunoda/node-redis-scripto)
 node-redis-scripto
 ==================
 
