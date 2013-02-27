@@ -11,7 +11,7 @@ node-redis-scripto
 ## Scripto manages lua scripts for you
 
 * You can place lua script in a directory
-* Just tell the `dirname` to `scripto`, it will take care of the scripts
+* Just tell the `dirname` to `scripto`, it will take care of lua scripts
 
 ~~~js
     var Scripto = require('redis-scripto');
@@ -41,7 +41,7 @@ node-redis-scripto
     });
 ~~~
 
-* If you need to load scripts just using JavaScript (without loading from filesystem), see following example.
+* If you need to load scripts just using JavaScript (without loading from the filesystem), see following example.
 
 ~~~js
     var scripts = {
