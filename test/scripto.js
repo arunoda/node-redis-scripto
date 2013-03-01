@@ -11,7 +11,9 @@ suite('Scripto', function() {
     suite('eval', function() {
 
         test('running normally', _clean(function(done) {
-            var s = new Scripto(redisClient, scriptDir);
+            
+            var s = new Scripto(redisClient);
+            s.loadFromDir(scriptDir);
             s.eval('read-write', ['helloKey'], [200], function(err, result) {
 
                 assert.equal(err, null);
@@ -21,7 +23,9 @@ suite('Scripto', function() {
         }));
 
         test('running non-existing script', _clean(function(done) {
-            var s = new Scripto(redisClient, scriptDir);
+            
+            var s = new Scripto(redisClient);
+            s.loadFromDir(scriptDir);
             s.eval('no-such-script', ['helloKey'], [200], function(err, result) {
 
                 assert.equal(err.message, 'NO_SUCH_SCRIPT');
@@ -34,7 +38,9 @@ suite('Scripto', function() {
     suite('evalSha', function() {
 
         test('failed at initial call', _clean(function(done) {
-            var s = new Scripto(redisClient, scriptDir);
+            
+            var s = new Scripto(redisClient);
+            s.loadFromDir(scriptDir);
             s.evalSha('read-write', ['helloKey'], [200], function(err, result) {
 
                 assert.equal(err.message, 'NO_SUCH_SCRIPT_SHA');
@@ -44,7 +50,9 @@ suite('Scripto', function() {
         }));
 
         test('success at runs after script loaded (some millis later)', _clean(function(done) {
-            var s = new Scripto(redisClient, scriptDir);
+            
+            var s = new Scripto(redisClient);
+            s.loadFromDir(scriptDir);
 
             setTimeout(function() {
                 
@@ -63,7 +71,9 @@ suite('Scripto', function() {
     suite('run', function() {
 
         test('success at initial call', _clean(function(done) {
-            var s = new Scripto(redisClient, scriptDir);
+            
+            var s = new Scripto(redisClient);
+            s.loadFromDir(scriptDir);
             s.run('read-write', ['helloKey'], [200], function(err, result) {
 
                 assert.equal(err, undefined);
@@ -73,7 +83,9 @@ suite('Scripto', function() {
         }));
 
         test('success at runs after script loaded (some millis later, then uses sha)', _clean(function(done) {
-            var s = new Scripto(redisClient, scriptDir);
+            
+            var s = new Scripto(redisClient);
+            s.loadFromDir(scriptDir);
 
             setTimeout(function() {
                 
@@ -89,10 +101,11 @@ suite('Scripto', function() {
         }));
     });
 
-    test('load scripts as an array', _clean(function(done) {
+    test('load scripts from an object', _clean(function(done) {
 
         var scripts = { 'script-one': 'return 1000;' };
-        var s = new Scripto(redisClient, scripts);
+        var s = new Scripto(redisClient);
+        s.load(scripts);
 
         s.run('script-one', [], [], function(err, result) {
 
@@ -103,15 +116,19 @@ suite('Scripto', function() {
 
     }));
 
-    test('failed when called without a proper 2nd argument', function(done) {
+    test('load a script from file', _clean(function(done) {
 
-        try {
-            var s = new Scripto(redisClient);
-        } catch(ex) {
-            assert.equal(ex.message, '2nd argument should be either a directory path or a map of scripts');
+        var s = new Scripto(redisClient);
+        s.loadFromFile('read-write', path.resolve(scriptDir, 'read-write.lua'));
+
+        s.run('read-write', ['helloKey'], [200], function(err, result) {
+
+            assert.equal(err, null);
+            assert.equal(result, 200);
             done();
-        }
-    });
+        });
+
+    }));
 
 });
 

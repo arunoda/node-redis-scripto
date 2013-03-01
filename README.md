@@ -16,7 +16,8 @@ node-redis-scripto
 
 ~~~js
     var Scripto = require('redis-scripto');
-    var scriptManager = new Scripto(redisClient, '/path/to/lua/scripts');
+    var scriptManager = new Scripto(redisClient);
+    scriptManager.loadFromDir('/path/to/lua/scripts');
 
     var keys    = ['keyOne', 'keyTwo'];
     var values  = [10, 20];
@@ -42,6 +43,16 @@ node-redis-scripto
     });
 ~~~
 
+* If you just need to load a single script, see following example
+
+~~~js
+    var scriptManager = new Scripto(redisClient);
+    scriptManager.loadFromFile('script-one', '/path/to/the/file');
+    scriptManager.run('script-one', [], [], function(err, result) {
+
+    });
+~~~
+
 * If you need to load scripts just using JavaScript (without loading from the filesystem), see following example.
 
 ~~~js
@@ -49,7 +60,8 @@ node-redis-scripto
         'script-one': 'return 1000'
     };
 
-    var scriptManager = new Scripto(redisClient, scripts);
+    var scriptManager = new Scripto(redisClient);
+    scriptManager.load(scripts);
     scriptManager.run('script-one', [], [], function(err, result) {
 
     });
