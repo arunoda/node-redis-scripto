@@ -130,6 +130,21 @@ suite('Scripto', function() {
 
     }));
 
+    test('reload a script if its no longer in the script cache', _clean(function(done) {
+
+        var s = new Scripto(redisClient);
+        s.loadFromFile('read-write', path.resolve(scriptDir, 'read-write.lua'));
+        redisClient.script('flush', function() {
+            s.run('read-write', ['helloKey'], [200], function(err, result) {
+
+                assert.equal(err, null);
+                assert.equal(result, 200);
+                done();
+            });
+        });
+
+    }));
+
 });
 
 function _clean(callback) {
