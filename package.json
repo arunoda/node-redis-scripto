@@ -22,10 +22,10 @@
     "test": "test/index.js"
   },
   "dependencies": {
-    "redis": "0.8.x",
-    "debug": "0.7.x"
+    "redis": "^2.8.0",
+    "debug": "^3.1.0"
   },
   "devDependencies": {
-    "mocha": "1.x.x"
+    "mocha": "^3.5.3"
   }
 }
