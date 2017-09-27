@@ -16,7 +16,7 @@
     "url": "git://github.com/arunoda/node-redis-scripto.git"
   },
   "engines": {
-    "node": ">= 0.8.x"
+    "node": ">= 4"
   },
   "scripts": {
     "test": "test/index.js"
