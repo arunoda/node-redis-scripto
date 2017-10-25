@@ -1,5 +1,10 @@
+os:
+  - linux
+  - osx
 language: node_js
 node_js:
-  - 0.8
+  - 4
+  - 6
+  - 8
 services:
   - redis-server
