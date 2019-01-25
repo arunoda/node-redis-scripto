@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "redis": "0.8.x",
+    "luamin": "^1.0.4",
     "debug": "0.7.x"
   },
   "devDependencies": {
